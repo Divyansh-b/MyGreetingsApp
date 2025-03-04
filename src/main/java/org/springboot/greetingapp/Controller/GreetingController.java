@@ -1,5 +1,6 @@
 package org.springboot.greetingapp.Controller;
 
+import jakarta.websocket.server.PathParam;
 import org.springboot.greetingapp.Model.Message;
 import org.springboot.greetingapp.Services.GreetingServices;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
+
     GreetingServices greetingServices;
     public GreetingController(GreetingServices greetingServices) {
         this.greetingServices = greetingServices;
@@ -37,5 +39,17 @@ public class GreetingController {
     @GetMapping("/services")
     public String greetingServices() {
         return greetingServices.getGreeting();
+    }
+
+    @GetMapping("/query")
+    public String query(@PathParam("firstName") String firstName, @PathParam("lastName") String lastName){
+        if(firstName != null && lastName != null)
+            return "Hello "+firstName+" "+lastName+"Welcome to My Application";
+        else if(firstName != null)
+            return "Hello "+firstName+" Welcome to Application";
+        else if(lastName != null)
+            return "Hello "+lastName+" Welcome to Application";
+        else
+            return "Hello, Welcome to Application";
     }
 }
