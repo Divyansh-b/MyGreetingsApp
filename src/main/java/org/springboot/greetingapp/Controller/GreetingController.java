@@ -1,11 +1,17 @@
 package org.springboot.greetingapp.Controller;
 
 import org.springboot.greetingapp.Model.Message;
+import org.springboot.greetingapp.Services.GreetingServices;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
+    GreetingServices greetingServices;
+    public GreetingController(GreetingServices greetingServices) {
+        this.greetingServices = greetingServices;
+    }
     Message message;
     @GetMapping("/get")
     public String greeting() {
@@ -28,5 +34,8 @@ public class GreetingController {
         return "Hello Patch Request from"+message;
     }
 
-
+    @GetMapping("/services")
+    public String greetingServices() {
+        return greetingServices.getGreeting();
+    }
 }
