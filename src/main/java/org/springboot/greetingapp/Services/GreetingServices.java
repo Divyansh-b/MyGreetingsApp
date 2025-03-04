@@ -53,6 +53,14 @@ public class GreetingServices {
       }).collect(Collectors.toList());
       return list;
     }
+    public Message updateByID(Message message, Long ID){
+        MessageEntity me = greetingRepository.findById(ID).orElseThrow(()->new RuntimeException("No Record Found"));
+        me.setMessage(message.getMessage());
+        greetingRepository.save(me);
+        Message Info = new Message(me.getMessage());
+        Info.setMessageID(me.getId());
+        return Info;
+    }
 }
 
 
