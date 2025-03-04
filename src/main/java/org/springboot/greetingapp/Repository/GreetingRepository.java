@@ -7,7 +7,7 @@ import org.yaml.snakeyaml.events.Event;
 
 
     @Repository
-    public interface GreetingRepository extends JpaRepository<MessageEntity, Event.ID> {
+    public interface GreetingRepository extends JpaRepository<MessageEntity, Long> {
 
 
     }

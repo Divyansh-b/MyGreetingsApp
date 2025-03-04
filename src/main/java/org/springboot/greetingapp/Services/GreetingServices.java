@@ -31,4 +31,10 @@ public class GreetingServices {
 
         return Info;
     }
+    public Message findbyID(Long ID){
+        MessageEntity me = greetingRepository.findById(ID).orElseThrow(()->new RuntimeException("No Record Found"));
+        Message Info = new Message(me.getMessage());
+        Info.setMessageID(me.getId());
+        return Info;
+    }
 }

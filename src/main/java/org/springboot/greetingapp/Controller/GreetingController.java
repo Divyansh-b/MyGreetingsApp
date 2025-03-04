@@ -57,4 +57,10 @@ public class GreetingController {
     public String save(@RequestBody Message message){
         return greetingServices.save(message).getMessage();
     }
-}
+    @GetMapping("/find/{ID}")
+    public Message findbyID(@PathVariable Long ID){
+        return greetingServices.findbyID(ID);
+    }
+
+    }
+
