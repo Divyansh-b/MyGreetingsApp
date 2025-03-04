@@ -6,6 +6,8 @@ import org.springboot.greetingapp.Services.GreetingServices;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
@@ -60,6 +62,11 @@ public class GreetingController {
     @GetMapping("/find/{ID}")
     public Message findbyID(@PathVariable Long ID){
         return greetingServices.findbyID(ID);
+    }
+    @GetMapping("/all")
+    public List<Message> getAll(){
+        return greetingServices.getAll();
+
     }
 
     }

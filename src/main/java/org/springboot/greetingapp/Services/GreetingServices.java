@@ -3,19 +3,27 @@ package org.springboot.greetingapp.Services;
 import org.springboot.greetingapp.Entities.MessageEntity;
 import org.springboot.greetingapp.Model.Message;
 import org.springboot.greetingapp.Repository.GreetingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 public class GreetingServices {
+    @Autowired
     String greeting;
     GreetingRepository greetingRepository;
+
     public GreetingServices() {
         greeting = "Hello User";
+        this.greetingRepository = greetingRepository;
+
     }
     public String getGreeting() {
-        return greeting;
+        return this.greeting;
     }
     public void setGreeting(String greeting) {
         this.greeting = greeting;
@@ -37,4 +45,15 @@ public class GreetingServices {
         Info.setMessageID(me.getId());
         return Info;
     }
+    public List<Message> getAll(){
+      List<Message> list  = greetingRepository.findAll().stream().map(me ->{
+           Message Info = new Message(me.getMessage());
+           Info.setMessageID(me.getId());
+           return Info;
+      }).collect(Collectors.toList());
+      return list;
+    }
 }
+
+
+
