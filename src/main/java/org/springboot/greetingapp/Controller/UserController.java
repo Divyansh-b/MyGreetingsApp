@@ -41,6 +41,9 @@ public class UserController {
         emailService.sendEmail(mail.getTo(),mail.getSubject(),mail.getMessage());
         return "Mail Sent Successfully";
     }
+
+    //UC12 - Swagger Functionality Testing
+
 }
 
 
