@@ -1,6 +1,7 @@
 package org.springboot.greetingapp.Services;
 
 import org.springboot.greetingapp.Entities.Auth;
+import org.springboot.greetingapp.Interfaces.IAuthInterface;
 import org.springboot.greetingapp.Model.AuthUserDTO;
 import org.springboot.greetingapp.Model.LoginUserDTO;
 import org.springboot.greetingapp.Repository.UserRepository;
@@ -12,17 +13,17 @@ import java.util.List;
 
 @Service
 
-public class AuthenticationService {
+public class  AuthenticationService implements IAuthInterface {
     @Autowired
-UserRepository userRepository;
+private final UserRepository userRepository;
 EmailService emailService;
 JWTServiceToken jwtServiceToken;
-public AuthenticationService(UserRepository userRepository, EmailService emailService) {
+public AuthenticationService (UserRepository userRepository, EmailService emailService) {
     this.userRepository = userRepository;
     this.emailService = emailService;
     this.jwtServiceToken = new JWTServiceToken();
 }
-public String register(AuthUserDTO user){
+public String registerUser(AuthUserDTO user){
     List<Auth> list1 = userRepository.findAll().stream().filter(u -> u.getEmail().equals(user.getEmail())).collect(java.util.stream.Collectors.toList());
     if(list1.size()>0){
         return "Email Already Exists";
@@ -44,7 +45,7 @@ public String register(AuthUserDTO user){
 
 
 }
-public String login(LoginUserDTO user){
+public String loginUser(LoginUserDTO user){
     List<Auth> list1 = userRepository.findAll().stream().filter(u -> u.getEmail().equals(user.getEmail())).collect(java.util.stream.Collectors.toList());
     if(list1.size()==0) return "User not Registered";
 
