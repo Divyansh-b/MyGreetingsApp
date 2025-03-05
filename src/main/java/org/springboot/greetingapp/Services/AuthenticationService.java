@@ -2,7 +2,9 @@ package org.springboot.greetingapp.Services;
 
 import org.springboot.greetingapp.Entities.Auth;
 import org.springboot.greetingapp.Model.AuthUserDTO;
+import org.springboot.greetingapp.Model.LoginUserDTO;
 import org.springboot.greetingapp.Repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +13,14 @@ import java.util.List;
 @Service
 
 public class AuthenticationService {
+    @Autowired
 UserRepository userRepository;
 EmailService emailService;
+JWTServiceToken jwtServiceToken;
 public AuthenticationService(UserRepository userRepository, EmailService emailService) {
     this.userRepository = userRepository;
     this.emailService = emailService;
+    this.jwtServiceToken = new JWTServiceToken();
 }
 public String register(AuthUserDTO user){
     List<Auth> list1 = userRepository.findAll().stream().filter(u -> u.getEmail().equals(user.getEmail())).collect(java.util.stream.Collectors.toList());
@@ -38,6 +43,21 @@ public String register(AuthUserDTO user){
 
 
 
+}
+public String login(LoginUserDTO user){
+    List<Auth> list1 = userRepository.findAll().stream().filter(u -> u.getEmail().equals(user.getEmail())).collect(java.util.stream.Collectors.toList());
+    if(list1.size()==0) return "User not Registered";
+
+    Auth found = list1.get(0);
+
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    if(!encoder.matches(user.getPassword(),found.getHashedPassword())) return "Invalid Password";
+
+    String token = jwtServiceToken.createToken(found.getUserID());
+
+    found.setToken(token);
+    userRepository.save(found);
+    return "User Logged In Successfully"+token;
 }
 
 }

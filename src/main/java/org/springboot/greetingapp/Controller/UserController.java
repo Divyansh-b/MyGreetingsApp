@@ -3,6 +3,7 @@ package org.springboot.greetingapp.Controller;
 
 import org.springboot.greetingapp.Entities.Auth;
 import org.springboot.greetingapp.Model.AuthUserDTO;
+import org.springboot.greetingapp.Model.LoginUserDTO;
 import org.springboot.greetingapp.Services.AuthenticationService;
 import org.springboot.greetingapp.Services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class UserController {
     // UC9 - For Registration of a User
     @PostMapping("/register") public String registerUser(@RequestBody AuthUserDTO user){
 return authenticationService.register(user);
+    }
+    //UC10 - For User Login
+    @PostMapping("/login") public String loginUser(@RequestBody LoginUserDTO user){
+        return authenticationService.login(user);
     }
 
 }
