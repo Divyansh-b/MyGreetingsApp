@@ -10,10 +10,7 @@ import org.springboot.greetingapp.Model.PathDTO;
 import org.springboot.greetingapp.Services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -46,10 +43,15 @@ public class UserController {
     }
 
     //UC12 - Swagger Functionality Testing
-
+    //UC13 - Forgot Password
     @PutMapping("/forgot")
     public AuthUserDTO forgotUser(@RequestBody PathDTO pathDTO) {
         return authInterface.forgotPassword(pathDTO);
+    }
+    //UC14 - Reset Password
+    @PutMapping("/reset")
+    public String resetPassword(@RequestParam String email, @RequestParam String curePassword, @RequestParam String newPassword) {
+        return authInterface.resetPassword(email,curePassword,newPassword);
     }
 
 }

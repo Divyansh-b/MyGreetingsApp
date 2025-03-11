@@ -10,4 +10,5 @@ public interface IAuthInterface {
     public String registerUser(AuthUserDTO user);
     public String loginUser(LoginUserDTO user);
     public AuthUserDTO forgotPassword(PathDTO pass);
+    public String resetPassword(String email,String curePassword, String newPassword) ;
 }
