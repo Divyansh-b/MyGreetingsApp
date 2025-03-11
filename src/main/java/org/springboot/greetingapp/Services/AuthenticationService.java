@@ -4,6 +4,7 @@ import org.springboot.greetingapp.Entities.Auth;
 import org.springboot.greetingapp.Interfaces.IAuthInterface;
 import org.springboot.greetingapp.Model.AuthUserDTO;
 import org.springboot.greetingapp.Model.LoginUserDTO;
+import org.springboot.greetingapp.Model.PathDTO;
 import org.springboot.greetingapp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,6 +60,25 @@ public String loginUser(LoginUserDTO user){
     found.setToken(token);
     userRepository.save(found);
     return "User Logged In Successfully"+token;
+}
+
+public AuthUserDTO forgotPassword(PathDTO passDTO){
+    Auth found = userRepository.findByEmail(passDTO.getEmail());
+    if (found == null) throw new RuntimeException("User Not Found");
+
+    if (passDTO.getNewPassword() == null || passDTO.getNewPassword().isEmpty()) {
+        throw new IllegalArgumentException("New password cannot be null or empty");
+    }
+
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    String hashedPass = encoder.encode(passDTO.getNewPassword());
+
+    found.setPassword(hashedPass);  // Store the hashed password
+    userRepository.save(found);
+
+    AuthUserDTO authUserDTO = new AuthUserDTO(found.getFirstName(), found.getLastName(), found.getEmail(), found.getPassword(), found.getUserID());
+    return authUserDTO;
+
 }
 
 }

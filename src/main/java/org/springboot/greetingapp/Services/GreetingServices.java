@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class  GreetingServices implements IGreetingInterface {
 
     String greeting;
+    @Autowired
     GreetingRepository greetingRepository;
 
     public GreetingServices() {

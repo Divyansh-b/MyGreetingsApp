@@ -9,9 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class MailDTO {
-    String to;
-    String subject;
-    String message;
+public class PathDTO {
+    String email;
+    String newPassword;
 
 }

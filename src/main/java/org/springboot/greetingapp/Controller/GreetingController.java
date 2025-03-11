@@ -4,6 +4,7 @@ import jakarta.websocket.server.PathParam;
 import org.springboot.greetingapp.Interfaces.IGreetingInterface;
 import org.springboot.greetingapp.Model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,10 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/greeting")  // Base URL for all endpoints: /greeting
 public class GreetingController {
+
+
     @Autowired
     IGreetingInterface greetingInterface;
-
-
 
 
 
@@ -53,10 +54,10 @@ public class GreetingController {
      * DELETE request - Deletes a message via URL path variable.
      * URL: http://localhost:8080/greeting/delete/{message}
      */
-    @DeleteMapping("/delete/{message}")
-    public String greetingDelete(@PathVariable String message) {
-        return "Hello Delete Request from " + message;
-    }
+//    @DeleteMapping("/delete/{message}")
+//    public String greetingDelete(@PathVariable String message) {
+//        return "Hello Delete Request from " + message;
+//    }
 
     /**
 
@@ -75,6 +76,7 @@ public class GreetingController {
      */
     @GetMapping("/services")
     public String greetingInterface() {
+
         return greetingInterface.getGreeting();
     }
 

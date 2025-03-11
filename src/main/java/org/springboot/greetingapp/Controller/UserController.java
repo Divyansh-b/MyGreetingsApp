@@ -6,9 +6,12 @@ import org.springboot.greetingapp.Interfaces.IAuthInterface;
 import org.springboot.greetingapp.Model.AuthUserDTO;
 import org.springboot.greetingapp.Model.LoginUserDTO;
 import org.springboot.greetingapp.Model.MailDTO;
+import org.springboot.greetingapp.Model.PathDTO;
 import org.springboot.greetingapp.Services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     EmailService emailService;
-
+    @Qualifier("authenticationService")
+    @Autowired
     IAuthInterface authInterface;
 
 
@@ -24,6 +28,7 @@ public class UserController {
     // UC9 - For Registration of a User
     @PostMapping("/register")
     public String registerUser(@RequestBody AuthUserDTO user) {
+
         return authInterface.registerUser(user);
     }
 
@@ -41,6 +46,11 @@ public class UserController {
     }
 
     //UC12 - Swagger Functionality Testing
+
+    @PutMapping("/forgot")
+    public AuthUserDTO forgotUser(@RequestBody PathDTO pathDTO) {
+        return authInterface.forgotPassword(pathDTO);
+    }
 
 }
 
